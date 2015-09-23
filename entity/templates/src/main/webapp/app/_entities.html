@@ -52,9 +52,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th translate="global.field.id">ID</th>
-                    <%_ for (fieldId in fields) { _%>
-                    <th translate="<%=keyPrefix + fields[fieldId].fieldName %>"><%=fields[fieldId].fieldNameCapitalized%></th>
+                    <th ng-click="loadPageSorted('id')" translate="global.field.id">ID</th><%_ for (fieldId in fields) { _%>
+                    <th ng-click="loadPageSorted('<%=fields[fieldId].fieldName %>')" translate="<%=keyPrefix + fields[fieldId].fieldName %>"><%=fields[fieldId].fieldNameCapitalized%></th>
                     <%_ } _%>
                     <%_ for (relationshipId in relationships) { _%>
                         <%_ if (relationships[relationshipId].relationshipType == 'many-to-one'

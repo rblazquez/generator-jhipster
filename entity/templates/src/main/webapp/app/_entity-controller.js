@@ -5,8 +5,9 @@ angular.module('<%=angularAppName%>')
         $scope.<%= entityInstance %>s = [];
         <%_ if (pagination == 'pager' || pagination == 'pagination') { _%>
         $scope.page = 0;
+	$scope.sorts = ["id,asc"];
         $scope.loadAll = function() {
-            <%= entityClass %>.query({page: $scope.page, size: 20}, function(result, headers) {
+            <%= entityClass %>.query({page: $scope.page, size: 20, sort: $scope.sorts}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.<%= entityInstance %>s = result;
             });
@@ -33,6 +34,11 @@ angular.module('<%=angularAppName%>')
             $scope.page = page;
             $scope.loadAll();
         };
+ 	$scope.loadPageSorted = function(sortProperty) {
+		var sortOrder = ($scope.sorts[0].split(",")[1] == "desc") ? "asc" : "desc";
+		$scope.sorts = [sortProperty + "," + sortOrder];
+		$scope.loadAll();
+	} 
         <%_ } _%>
         <%_ if (pagination == 'no') { _%>
         $scope.loadAll = function() {
